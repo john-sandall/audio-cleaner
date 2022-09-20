@@ -44,7 +44,7 @@ Add this to `~/.bash_profile`:
 
 ```bash
 export PATH="/home/jupyter/.local/bin:$PATH"
-conda activate jp-data
+conda activate audio-cleaner
 cd ~/data
 eval "$(direnv hook bash)"
 ```
@@ -60,5 +60,5 @@ cp .env.template .env
 direnv allow
 
 # Create Jupyter kernel
-python -m ipykernel install --user --name jp-data --display-name "Python (jp-data)"
+python -m ipykernel install --user --name audio-cleaner --display-name "Python (audio-cleaner)"
 ```
