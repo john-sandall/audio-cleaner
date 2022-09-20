@@ -1,0 +1,90 @@
+# Data
+data/downloaded
+data/processed
+data/interim
+wheels/*.whl*
+!**/wheels/**/*.gitkeep
+**/data/**/*.pkl.gz
+!**/data/**/README.md
+!**/data/**/*.gitkeep
+
+# Secrets
+.env
+
+# Editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.RData
+*.sw?
+*~
+
+# Personal TODO files
+TODO.txt
+
+# Node
+node_modules
+
+# Python
+**/__pycache__/*
+*.pyc
+.pytest_cache
+
+# notebooks
+**/.ipynb_checkpoints/*
+*.nbconvert*.ipynb
+.notebook_test.sh
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Environment
+venv/
+
+# coverage
+.coverage
+.coverage.*
+htmlcov
+
+# logging
+wandb
+*.pt
+*.ckpt
+lightning_logs/
+logs
+*/training/logs
+*/training/*sweep.yaml
+flagged
+
+# Misc
+.aws/credentials
+.DS_Store
+_labs
+.mypy_cache
+lab9/requirements.txt
+/requirements.txt
+requirements/dev-lint.txt
+bootstrap.py
+**/fixme.py
+*.log
+*.pem
+pyrightconfig.json
+
+# https://www.gitignore.io/
