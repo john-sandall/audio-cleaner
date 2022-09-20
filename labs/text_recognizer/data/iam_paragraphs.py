@@ -48,7 +48,7 @@ class IAMParagraphs(BaseDataModule):
         if (PROCESSED_DATA_DIRNAME / "_properties.json").exists():
             return
         rank_zero_info(
-            "IAMParagraphs.prepare_data: Cropping IAM paragraph regions and saving them along with labels...",
+            "IAMParagraphs.prepare_data: Cropping IAM paragraph regions " "and saving them along with labels...",
         )
 
         iam = IAM()
@@ -70,7 +70,7 @@ class IAMParagraphs(BaseDataModule):
                 },
             )
 
-        with open(PROCESSED_DATA_DIRNAME / "_properties.json", "w") as f:
+        with open(PROCESSED_DATA_DIRNAME / "_properties.json", "w", encoding="utf-8") as f:
             json.dump(properties, f, indent=4)
 
     def setup(self, stage: str = None) -> None:
@@ -110,7 +110,8 @@ class IAMParagraphs(BaseDataModule):
         x, y = next(iter(self.train_dataloader()))
         xt, yt = next(iter(self.test_dataloader()))
         data = (
-            f"Train/val/test sizes: {len(self.data_train)}, {len(self.data_val)}, {len(self.data_test)}\n"
+            f"Train/val/test sizes: {len(self.data_train)}, {len(self.data_val)}, "
+            f"{len(self.data_test)}\n"
             f"Train Batch x stats: {(x.shape, x.dtype, x.min(), x.mean(), x.std(), x.max())}\n"
             f"Train Batch y stats: {(y.shape, y.dtype, y.min(), y.max())}\n"
             f"Test Batch x stats: {(xt.shape, xt.dtype, xt.min(), xt.mean(), xt.std(), xt.max())}\n"
@@ -127,11 +128,7 @@ def validate_input_and_output_dimensions(
     properties = get_dataset_properties()
 
     max_image_shape = properties["crop_shape"]["max"] / IMAGE_SCALE_FACTOR
-    assert (
-        input_dims is not None
-        and input_dims[1] >= max_image_shape[0]
-        and input_dims[2] >= max_image_shape[1]
-    )
+    assert input_dims is not None and input_dims[1] >= max_image_shape[0] and input_dims[2] >= max_image_shape[1]
 
     # Add 2 because of start and end tokens
     assert output_dims is not None and output_dims[0] >= properties["label_length"]["max"] + 2
@@ -159,7 +156,7 @@ def save_crops_and_labels(crops: dict[str, Image.Image], labels: dict[str, str],
     """Save crops, labels and shapes of crops of a split."""
     (PROCESSED_DATA_DIRNAME / split).mkdir(parents=True, exist_ok=True)
 
-    with open(_labels_filename(split), "w") as f:
+    with open(_labels_filename(split), "w", encoding="utf-8") as f:
         json.dump(labels, f, indent=4)
 
     for id_, crop in crops.items():
@@ -168,7 +165,7 @@ def save_crops_and_labels(crops: dict[str, Image.Image], labels: dict[str, str],
 
 def load_processed_crops_and_labels(split: str) -> tuple[Sequence[Image.Image], Sequence[str]]:
     """Load processed crops and labels for given split."""
-    with open(_labels_filename(split)) as f:
+    with open(_labels_filename(split), encoding="utf-8") as f:
         labels = json.load(f)
 
     sorted_ids = sorted(labels.keys())
@@ -181,7 +178,7 @@ def load_processed_crops_and_labels(split: str) -> tuple[Sequence[Image.Image], 
 
 def get_dataset_properties() -> dict:
     """Return properties describing the overall dataset."""
-    with open(PROCESSED_DATA_DIRNAME / "_properties.json") as f:
+    with open(PROCESSED_DATA_DIRNAME / "_properties.json", encoding="utf-8") as f:
         properties = json.load(f)
 
     def _get_property_values(key: str) -> list:

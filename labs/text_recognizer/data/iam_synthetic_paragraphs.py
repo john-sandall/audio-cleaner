@@ -39,13 +39,13 @@ class IAMSyntheticParagraphs(IAMParagraphs):
 
     def prepare_data(self, *args, **kwargs) -> None:
         """
-        Prepare IAM lines such that they can be used to generate synthetic paragraphs dataset in setup().
-        This method is IAMLines.prepare_data + resizing of line crops.
+        Prepare IAM lines such that they can be used to generate synthetic paragraphs dataset in
+        setup(). This method is IAMLines.prepare_data + resizing of line crops.
         """
         if PROCESSED_DATA_DIRNAME.exists():
             return
         rank_zero_info(
-            "IAMSyntheticParagraphs.prepare_data: preparing IAM lines for synthetic IAM paragraph creation...",
+            "IAMSyntheticParagraphs.prepare_data: preparing IAM lines " "for synthetic IAM paragraph creation...",
         )
 
         iam = IAM()
@@ -60,14 +60,14 @@ class IAMSyntheticParagraphs(IAMParagraphs):
 
     def setup(self, stage: str = None) -> None:
         rank_zero_info(
-            f"IAMSyntheticParagraphs.setup({stage}): Loading train IAM paragraph regions and lines...",
+            f"IAMSyntheticParagraphs.setup({stage}): " "Loading train IAM paragraph regions and lines...",
         )
 
         if stage == "fit" or stage is None:
             self._load_processed_crops_and_labels()
-            self.data_train = IAMSyntheticParagraphsDataset(
-                line_crops=self.line_crops,
-                line_labels=self.line_labels,
+            self.data_train = IAMSyntheticParagraphsDataset(  # type: ignore
+                line_crops=self.line_crops,  # type: ignore
+                line_labels=self.line_labels,  # type: ignore
                 dataset_len=self.dataset_len,
                 inverse_mapping=self.inverse_mapping,
                 input_dims=self.input_dims,

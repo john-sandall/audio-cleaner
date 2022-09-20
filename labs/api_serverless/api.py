@@ -5,7 +5,7 @@ import json
 
 from PIL import ImageStat
 
-import text_recognizer.util as util
+from text_recognizer import util
 from text_recognizer.paragraph_text_recognizer import ParagraphTextRecognizer
 
 model = ParagraphTextRecognizer()
@@ -36,17 +36,17 @@ def _load_image(event):
     if image_url is not None:
         print(f"INFO url {image_url}")
         return util.read_image_pil(image_url, grayscale=True)
-    else:
-        image = event.get("image")
-        if image is not None:
-            print("INFO reading image from event")
-            return util.read_b64_image(image, grayscale=True)
-        else:
-            return None
+
+    image = event.get("image")
+    if image is not None:
+        print("INFO reading image from event")
+        return util.read_b64_image(image, grayscale=True)
+
+    return None
 
 
 def _from_string(event):
     if isinstance(event, str):
         return json.loads(event)
-    else:
-        return event
+
+    return event

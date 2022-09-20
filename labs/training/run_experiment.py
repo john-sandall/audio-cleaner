@@ -38,13 +38,13 @@ def _setup_parser():
         "--wandb",
         action="store_true",
         default=False,
-        help="If passed, logs experiment results to Weights & Biases. Otherwise logs only to local Tensorboard.",
+        help=("If passed, logs experiment results to Weights & Biases. " "Otherwise logs only to local Tensorboard."),
     )
     parser.add_argument(
         "--profile",
         action="store_true",
         default=False,
-        help="If passed, uses the PyTorch Profiler to track computation, exported as a Chrome-style trace.",
+        help=("If passed, uses the PyTorch Profiler to track computation, " "exported as a Chrome-style trace."),
     )
     parser.add_argument(
         "--data_class",
@@ -68,8 +68,9 @@ def _setup_parser():
         "--stop_early",
         type=int,
         default=0,
-        help="If non-zero, applies early stopping, with the provided value as the 'patience' argument."
-        + " Default is 0.",
+        help=(
+            "If non-zero, applies early stopping, with the provided value as the " "'patience' argument. Default is 0."
+        ),
     )
 
     # Get the data and model classes, so that we can add their specific arguments

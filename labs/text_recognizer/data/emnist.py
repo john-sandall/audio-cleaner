@@ -79,13 +79,16 @@ class EMNIST(BaseDataModule):
             self.data_test = BaseDataset(self.x_test, self.y_test, transform=self.transform)
 
     def __repr__(self):
-        basic = f"EMNIST Dataset\nNum classes: {len(self.mapping)}\nMapping: {self.mapping}\nDims: {self.input_dims}\n"
+        basic = (
+            f"EMNIST Dataset\nNum classes: {len(self.mapping)}\n" f"Mapping: {self.mapping}\nDims: {self.input_dims}\n"
+        )
         if self.data_train is None and self.data_val is None and self.data_test is None:
             return basic
 
         x, y = next(iter(self.train_dataloader()))
         data = (
-            f"Train/val/test sizes: {len(self.data_train)}, {len(self.data_val)}, {len(self.data_test)}\n"
+            f"Train/val/test sizes: {len(self.data_train)}, {len(self.data_val)}, "
+            f"{len(self.data_test)}\n"
             f"Batch x stats: {(x.shape, x.dtype, x.min(), x.mean(), x.std(), x.max())}\n"
             f"Batch y stats: {(y.shape, y.dtype, y.min(), y.max())}\n"
         )

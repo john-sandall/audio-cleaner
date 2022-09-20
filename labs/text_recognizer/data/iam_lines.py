@@ -87,12 +87,8 @@ class IAMLines(BaseDataModule):
             self.data_val = BaseDataset(x_val, y_val, transform=self.trainval_transform)
 
             # quick check: do we have the right sequence lengths?
-            assert (
-                self.output_dims[0] >= max(len(_) for _ in labels_train) + 2
-            )  # Add 2 for start/end tokens.
-            assert (
-                self.output_dims[0] >= max(len(_) for _ in labels_val) + 2
-            )  # Add 2 for start/end tokens.
+            assert self.output_dims[0] >= max(len(_) for _ in labels_train) + 2  # Add 2 for start/end tokens.
+            assert self.output_dims[0] >= max(len(_) for _ in labels_val) + 2  # Add 2 for start/end tokens.
 
         if stage == "test" or stage is None:
             x_test, labels_test = load_processed_crops_and_labels("test", PROCESSED_DATA_DIRNAME)

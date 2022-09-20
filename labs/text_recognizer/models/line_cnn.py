@@ -62,7 +62,8 @@ class ConvBlock(nn.Module):
 
 class LineCNN(nn.Module):
     """
-    Model that uses a simple CNN to process an image of a line of characters with a window, outputs a sequence of logits
+    Model that uses a simple CNN to process an image of a line of characters with a window, outputs
+    a sequence of logits
     """
 
     def __init__(
@@ -84,7 +85,7 @@ class LineCNN(nn.Module):
         self.WS = self.args.get("window_stride", WINDOW_STRIDE)
         self.limit_output_length = self.args.get("limit_output_length", False)
 
-        # Input is (1, H, W)
+        # Input is (1, H, W)  # noqa
         self.convs = nn.Sequential(
             ConvBlock(1, conv_dim),
             ConvBlock(conv_dim, conv_dim),

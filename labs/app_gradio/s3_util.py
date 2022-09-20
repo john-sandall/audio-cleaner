@@ -15,12 +15,10 @@ s3 = boto3.resource("s3")
 def get_or_create_bucket(name):
     """Gets an S3 bucket with boto3 or creates it if it doesn't exist."""
     try:  # try to create a bucket
-        name, response = _create_bucket(name)
+        name, response = _create_bucket(name)  # pylint: disable=unused-variable
     except botocore.exceptions.ClientError as err:
         # error handling from https://github.com/boto/boto3/issues/1195#issuecomment-495842252
-        status = err.response["ResponseMetadata"][
-            "HTTPStatusCode"
-        ]  # status codes identify particular errors
+        status = err.response["ResponseMetadata"]["HTTPStatusCode"]  # status codes identify particular errors
 
         if status == 409:  # if the bucket exists already,
             pass  # we don't need to make it -- we presume we have the right permissions
@@ -48,8 +46,7 @@ def make_key(fileobj, filetype=None):
     identifier = make_identifier(fileobj)
     if filetype is None:
         return identifier
-    else:
-        return identifier + "." + filetype
+    return identifier + "." + filetype
 
 
 def make_unique_bucket_name(prefix, seed):
@@ -131,7 +128,7 @@ def _get_policy(bucket_name):
 def make_identifier(byte_data):
     """Create a unique identifier for a collection of bytes via hashing."""
     # feed them to hashing algo -- security is not critical here, so we use SHA-1
-    hashed_data = hashlib.sha1(byte_data)  # noqa: S3
+    hashed_data = hashlib.sha1(byte_data)  # noqa
     identifier = hashed_data.hexdigest()  # turn it into hexdecimal
 
     return identifier

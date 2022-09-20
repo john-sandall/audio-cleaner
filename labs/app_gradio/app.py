@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import logging
 import os
 import warnings
 from pathlib import Path
@@ -11,17 +10,17 @@ from typing import Callable
 
 import gradio as gr
 import requests
+from loguru import logger as log
 from PIL import ImageStat
 from PIL.Image import Image
 
-import text_recognizer.util as util
 from app_gradio.flagging import GantryImageToTextLogger, get_api_key
 from app_gradio.s3_util import make_unique_bucket_name
+from text_recognizer import util
 from text_recognizer.paragraph_text_recognizer import ParagraphTextRecognizer
 
 os.environ["CUDA_VISIBLE_DEVICES"] = ""  # do not use GPU
 
-logging.basicConfig(level=logging.INFO)
 DEFAULT_APPLICATION_NAME = "fsdl-text-recognizer"
 
 APP_DIR = Path(__file__).resolve().parent  # what is the directory for this application?
@@ -83,7 +82,7 @@ def make_frontend(
     # build a basic browser interface to a Python function
     frontend = gr.Interface(
         fn=fn,  # which Python function are we interacting with?
-        outputs=gr.components.Textbox(),  # what output widgets does it need? the default text widget
+        outputs=gr.components.Textbox(),  # what output widgets does it need? default text widget
         # what input widgets does it need? we configure an image widget
         inputs=gr.components.Image(type="pil", label="Handwritten Text"),
         title="📝 Text Recognizer",  # what should we display at the top of the page?
@@ -160,19 +159,19 @@ class PredictorBackend:
         headers = {"Content-type": "application/json"}
         payload = json.dumps({"image": "data:image/png;base64," + encoded_image})
 
-        response = requests.post(self.url, data=payload, headers=headers)
+        response = requests.post(self.url, data=payload, headers=headers, timeout=30)
         pred = response.json()["pred"]
 
         return pred
 
     def _log_inference(self, pred, metrics):
         for key, value in metrics.items():
-            logging.info(f"METRIC {key} {value}")
-        logging.info(f"PRED >begin\n{pred}\nPRED >end")
+            log.info(f"METRIC {key} {value}")
+        log.info(f"PRED >begin\n{pred}\nPRED >end")
 
 
 def _load_readme(with_logging=False):
-    with open(README) as f:
+    with open(README, encoding="utf-8") as f:
         lines = f.readlines()
         if not with_logging:
             lines = lines[: lines.index("<!-- logging content below -->\n")]
@@ -187,7 +186,11 @@ def _make_parser():
         "--model_url",
         default=None,
         type=str,
-        help="Identifies a URL to which to send image data. Data is base64-encoded, converted to a utf-8 string, and then set via a POST request as JSON with the key 'image'. Default is None, which instead sends the data to a model running locally.",
+        help=(
+            "Identifies a URL to which to send image data. Data is base64-encoded, "
+            "converted to a utf-8 string, and then set via a POST request as JSON with the key 'image'. "
+            "Default is None, which instead sends the data to a model running locally."
+        ),
     )
     parser.add_argument(
         "--port",
@@ -203,13 +206,19 @@ def _make_parser():
     parser.add_argument(
         "--gantry",
         action="store_true",
-        help="Pass --flagging and this flag to log user feedback to Gantry. Requires GANTRY_API_KEY to be defined as an environment variable.",
+        help=(
+            "Pass --flagging and this flag to log user feedback to Gantry. "
+            "Requires GANTRY_API_KEY to be defined as an environment variable."
+        ),
     )
     parser.add_argument(
         "--application",
         default=DEFAULT_APPLICATION_NAME,
         type=str,
-        help=f"Name of the Gantry application to which feedback should be logged, if --gantry and --flagging are passed. Default is {DEFAULT_APPLICATION_NAME}.",
+        help=(
+            "Name of the Gantry application to which feedback should be logged, "
+            f"if --gantry and --flagging are passed. Default is {DEFAULT_APPLICATION_NAME}."
+        ),
     )
 
     return parser

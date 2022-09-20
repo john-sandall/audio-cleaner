@@ -26,14 +26,12 @@ BEST_CHECKPOINT_ALIAS = "best"
 MODEL_CHECKPOINT_PATH = "model.ckpt"
 LOG_DIR = Path("training") / "logs"
 
-STAGED_MODEL_TYPE = (
-    "prod-ready"  # we can choose the name of this type, and ideally it's different from checkpoints
-)
+STAGED_MODEL_TYPE = "prod-ready"  # we can choose the name of this type, and ideally it's different from checkpoints
 STAGED_MODEL_FILENAME = "model.pt"  # standard nomenclature; pytorch_model.bin is also used
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-LITMODEL_CLASS = TransformerLitModel
+LITMODEL_CLASS = TransformerLitModel  # pylint: disable=invalid-name
 
 api = wandb.Api()
 
@@ -136,9 +134,7 @@ def print_info(artifact, run=None):
 
     full_artifact_name = f"{artifact.entity}/{artifact.project}/{artifact.name}"
     print(f"Using artifact {full_artifact_name}")
-    artifact_url_prefix = (
-        f"https://wandb.ai/{artifact.entity}/{artifact.project}/artifacts/{artifact.type}"
-    )
+    artifact_url_prefix = f"https://wandb.ai/{artifact.entity}/{artifact.project}/artifacts/{artifact.type}"
     artifact_url_suffix = f"{artifact.name.replace(':', '/')}"
     print(f"View at URL: {artifact_url_prefix}/{artifact_url_suffix}")
 
@@ -210,7 +206,7 @@ def _find_artifact_run(entity, project, type, run, alias):
         raise ValueError(f"No artifact with alias {alias} found at {run_name} of type {type}")
     if len(match) > 1:
         raise ValueError(
-            f"Multiple artifacts ({len(match)}) with alias {alias} found at {run_name} of type {type}",
+            f"Multiple artifacts ({len(match)}) with alias {alias} " f"found at {run_name} of type {type}",
         )
     return f"{entity}/{project}/{match[0].name}"
 
@@ -242,7 +238,8 @@ def _get_entity_from(args):
         raise RuntimeError(
             f"No entity argument provided. Use --entity=DEFAULT to use {DEFAULT_ENTITY}.",
         )
-    elif entity == "DEFAULT":
+
+    if entity == "DEFAULT":
         entity = DEFAULT_ENTITY
 
     return entity
@@ -253,13 +250,21 @@ def _setup_parser():
     parser.add_argument(
         "--fetch",
         action="store_true",
-        help=f"If provided, check ENTITY/FROM_PROJECT for an artifact with the provided STAGED_MODEL_NAME and download its latest version to {PROD_STAGING_ROOT}/STAGED_MODEL_NAME.",
+        help=(
+            f"If provided, check ENTITY/FROM_PROJECT for an artifact with the provided "
+            f"STAGED_MODEL_NAME and download its latest version to "
+            f"{PROD_STAGING_ROOT}/STAGED_MODEL_NAME."
+        ),
     )
     parser.add_argument(
         "--entity",
         type=str,
         default=None,
-        help=f"Entity from which to download the checkpoint. Note that checkpoints are always uploaded to the logged-in wandb entity. Pass the value 'DEFAULT' to also download from default entity, which is currently {DEFAULT_ENTITY}.",
+        help=(
+            f"Entity from which to download the checkpoint. Note that checkpoints are always "
+            f"uploaded to the logged-in wandb entity. Pass the value 'DEFAULT' to also download "
+            f"from default entity, which is currently {DEFAULT_ENTITY}."
+        ),
     )
     parser.add_argument(
         "--from_project",
@@ -277,13 +282,21 @@ def _setup_parser():
         "--run",
         type=str,
         default=None,
-        help=f"Optionally, the name of a run to check for an artifact of type {MODEL_CHECKPOINT_TYPE} that has the provided CKPT_ALIAS. Default is None.",
+        help=(
+            f"Optionally, the name of a run to check for an artifact of type "
+            f"{MODEL_CHECKPOINT_TYPE} that has the provided CKPT_ALIAS. "
+            "Default is None."
+        ),
     )
     parser.add_argument(
         "--ckpt_alias",
         type=str,
         default=BEST_CHECKPOINT_ALIAS,
-        help=f"Alias that identifies which model checkpoint should be staged.The artifact's alias can be set manually or programmatically elsewhere. Default is '{BEST_CHECKPOINT_ALIAS}'.",
+        help=(
+            f"Alias that identifies which model checkpoint should be staged. "
+            f"The artifact's alias can be set manually or programmatically elsewhere. "
+            f"Default is '{BEST_CHECKPOINT_ALIAS}'."
+        ),
     )
     parser.add_argument(
         "--staged_model_name",

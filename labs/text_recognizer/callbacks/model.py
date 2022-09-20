@@ -13,9 +13,9 @@ from .util import check_and_warn, logging
 try:
     import torchviz
 
-    has_torchviz = True
+    HAS_TORCHVIZ = True
 except ImportError:
-    has_torchviz = False
+    HAS_TORCHVIZ = False
 
 
 class ModelSizeLogger(pl.Callback):
@@ -57,7 +57,7 @@ class GraphLogger(pl.Callback):
         super().__init__()
         self.graph_logged = False
         self.output_key = output_key
-        if not has_torchviz:
+        if not HAS_TORCHVIZ:
             raise ImportError("GraphLogCallback requires torchviz." "")
 
     @rank_zero_only

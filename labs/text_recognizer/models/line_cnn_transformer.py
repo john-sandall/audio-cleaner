@@ -19,7 +19,9 @@ TF_NHEAD = 4
 
 
 class LineCNNTransformer(nn.Module):
-    """Process the line through a CNN and process the resulting sequence with a Transformer decoder."""
+    """
+    Process the line through a CNN and process the resulting sequence with a Transformer decoder.
+    """
 
     def __init__(
         self,
@@ -150,9 +152,7 @@ class LineCNNTransformer(nn.Module):
 
         # Set all tokens after end token to be padding
         for Sy in range(1, S):
-            ind = (output_tokens[:, Sy - 1] == self.end_token) | (
-                output_tokens[:, Sy - 1] == self.padding_token
-            )
+            ind = (output_tokens[:, Sy - 1] == self.end_token) | (output_tokens[:, Sy - 1] == self.padding_token)
             output_tokens[ind, Sy] = self.padding_token
 
         return output_tokens  # (B, Sy)

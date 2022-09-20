@@ -59,7 +59,7 @@ flake8-fixme = "^1.1.1"
 flake8-implicit-str-concat = "^0.3.0"
 flake8-import-order = "^0.18.1"
 flake8-no-pep420 = "^2.3.0"
-flake8-print = "^5.0.0"
+# flake8-print = "^5.0.0"
 flake8-return = "^1.1.3"
 ipdb = "^0.13.9"
 ipykernel = "^6.15.2"
@@ -69,7 +69,7 @@ itermplot = "^0.331"
 jupyterlab = "^3.4.6"
 jupyter-black = "^0.3.1"
 matplotlib = "^3.5.3"
-mypy = "^0.971"                       # mypy==0.960  # mypy version also pinned in .pre-commit-config.yaml
+mypy = "^0.971"              # mypy==0.960  # mypy version also pinned in .pre-commit-config.yaml
 nltk = "^3.7"
 notebook = "^6.4.12"
 pip-audit = "^2.4.4"
@@ -78,15 +78,15 @@ pre-commit = "^2.20.0"
 pycodestyle = "^2.9.1"
 pydocstyle = "^6.1.1"
 pylint = "^2.15.2"
-pytest = "^7.1.3"                     # pytest==7.1.1
-pytest-cov = "^3.0.0"                 #==3.0.0
-pytorch-lightning = "^1.7.5"          # 1.6.3  # versioned to improve stability
+pytest = "^7.1.3"            # pytest==7.1.1
+pytest-cov = "^3.0.0"        #==3.0.0
+pytorch-lightning = "^1.7.5" # 1.6.3  # versioned to improve stability
 safety = "^2.1.1"
-scipy = "^1.9.1"                      # "<1.9"
+scipy = "^1.9.1"             # "<1.9"
 shellcheck-py = "^0.8.0.4"
 toml = "^0.10.2"
-torchmetrics = "^0.9.3"               # <0.8
-tornado = "^6.2"                      # ">=5.1,<5.2"  # versioned to match Google Colab
+torchmetrics = "^0.9.3"      # <0.8
+tornado = "^6.2"             # ">=5.1,<5.2"  # versioned to match Google Colab
 towncrier = "^21.9.0"
 types-toml = "^0.10.8"
 wandb = "^0.12.21"
@@ -99,7 +99,7 @@ build-backend = "poetry.core.masonry.api"
 # ✅ Linters
 ############
 [tool.black]
-line-length = 100
+line-length = 120
 target-version = ["py310"]
 
 [tool.darglint] # configured in setup.cfg
@@ -123,7 +123,7 @@ load-plugins = []
 [tool.pylint."MESSAGES CONTROL"]
 enable = "all"
 max-module-lines = 2000
-max-line-length = 100
+max-line-length = 120
 max-locals = 50
 min-similarity-lines = 150
 max-statements = 89
@@ -140,6 +140,7 @@ good-names = [
 	"C",
 	"f",
 	"fc",
+	"fn",
 	"H",
 	"i",
 	"id",
