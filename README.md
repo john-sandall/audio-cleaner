@@ -1,6 +1,6 @@
 # 🥞 Full Stack Deep Learning Fall 2022 Labs
 
-[![CI](https://github.com/john-sandall/fsdl-text-recognizer-2022-labs/actions/workflows/main.yaml/badge.svg)](https://github.com/john-sandall/fsdl-text-recognizer-2022-labs/actions/workflows/main.yaml)
+[![CI](https://github.com/john-sandall/audio-cleaner/actions/workflows/main.yaml/badge.svg)](https://github.com/john-sandall/audio-cleaner/actions/workflows/main.yaml)
 
 Welcome!
 

@@ -30,6 +30,10 @@ mkvirtualenv -p python$(cat .python-version) $(cat .venv)
 python -V
 python -m pip install --upgrade pip
 
+# Install Linux CUDA 11.6 wheels (even if not on Linux)
+wget https://download.pytorch.org/whl/cu116/torch-1.12.1%2Bcu116-cp310-cp310-linux_x86_64.whl -P ./wheels/
+wget https://download.pytorch.org/whl/cu116/torchvision-0.13.1%2Bcu116-cp310-cp310-linux_x86_64.whl -P ./wheels/
+
 # Install dependencies with Poetry
 poetry self update
 poetry install --no-root --sync

@@ -2,13 +2,13 @@
 # 📜 Poetry
 ###########
 [tool.poetry]
-name = "fullstackdeeplearning"
+name = "audio-cleaner"
 version = "0.1.0"
-description = "Complete deep learning project developed in Full Stack Deep Learning, 2022 edition."
+description = "FSDL 2022 project."
 authors = ["John Sandall <2884159+john-sandall@users.noreply.github.com>"]
-license = "UNLICENSED"
+license = "MIT"
 classifiers = ["Private :: Do Not Upload"]
-packages = [{ include = "fsdl", from = "fsdl" }]
+# packages = [{ include = "audio_cleaner", from = "audio_cleaner" }]
 
 [tool.poetry.dependencies]
 python = ">=3.10.4,<3.11"
@@ -203,13 +203,13 @@ addopts = "--cov training --cov text_recognizer --cov-branch --doctest-modules -
 # 📣 Towncrier
 ##############
 [tool.towncrier]
-package = "fsdl"
+package = "audio_cleaner"
 package_dir = "."
 filename = "CHANGELOG.md"
 directory = ".changelog/"
 template = ".changelog/template.md"
 title_format = "## [{version}] - {project_date}"
-issue_format = "[#{issue}](https://github.com/john-sandall/fsdl-text-recognizer-2022-labs/issues/{issue})"
+issue_format = "[#{issue}](https://github.com/john-sandall/audio-cleaner/issues/{issue})"
 start_string = "<!-- TOWNCRIER -->\n"
 underlines = ["", ""]
 

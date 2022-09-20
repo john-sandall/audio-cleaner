@@ -2,7 +2,7 @@
 data/downloaded
 data/processed
 data/interim
-wheels/*.whl
+wheels/*.whl*
 !**/wheels/**/*.gitkeep
 **/data/**/*.pkl.gz
 !**/data/**/README.md

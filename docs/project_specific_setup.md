@@ -31,7 +31,7 @@ tldr gcloud
 ## Jupyter kernel
 
 ```sh
-python -m ipykernel install --user --name fsdl --display-name "Python (fsdl)"
+python -m ipykernel install --user --name audio-cleaner --display-name "Python (audio-cleaner)"
 ```
 
 ## Download torch & torchvision wheels

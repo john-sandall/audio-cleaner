@@ -14,7 +14,7 @@ cat ~/.ssh/id_ed25519.pub
 Add the new key here: [https://github.com/settings/keys]
 
 ```sh
-git clone git@github.com:john-sandall/fsdl-text-recognizer-2022-labs.git
+git clone git@github.com:john-sandall/audio-cleaner.git
 ```
 
 ## Jupyter Terminal
@@ -32,7 +32,7 @@ bash Miniconda3-latest-Linux-x86_64.sh
 rm Miniconda3-latest-Linux-x86_64.sh
 
 # Install Python + create environment
-cd fsdl-text-recognizer-2022-labs
+cd audio-cleaner
 conda create --name $(cat .venv) python=$(cat .python-version) --no-default-packages
 conda activate $(cat .venv)
 
